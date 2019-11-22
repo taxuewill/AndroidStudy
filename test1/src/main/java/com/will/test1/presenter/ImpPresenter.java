@@ -68,13 +68,13 @@ public class ImpPresenter implements IPresenter {
 
             if (sensorEvent.sensor.getType() == Sensor.TYPE_MAGNETIC_FIELD){
                 magneticFieldValues = sensorEvent.values.clone();
-                coordinateTransform(magneticFieldValues);
+//                coordinateTransform(magneticFieldValues);
 //                Log.i(TAG,String.format("magnetic x:%f,y:%f,z:%f",magneticFieldValues[0],magneticFieldValues[1],magneticFieldValues[2]));
             }
 
             if (sensorEvent.sensor.getType() == Sensor.TYPE_ACCELEROMETER){
                 accelerometerValues = sensorEvent.values.clone();
-                coordinateTransform(accelerometerValues);
+//                coordinateTransform(accelerometerValues);
 //                Log.i(TAG,String.format("Accelerometer x:%f,y:%f,z:%f",accelerometerValues[0],accelerometerValues[1],accelerometerValues[2]));
                 mBackHandler.sendEmptyMessage(MSG_TEST);
             }
