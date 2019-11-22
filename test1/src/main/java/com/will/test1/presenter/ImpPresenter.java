@@ -5,6 +5,9 @@ import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
+import android.os.Handler;
+import android.os.HandlerThread;
+import android.os.Message;
 import android.util.Log;
 
 import com.will.test1.TestApplication;
@@ -12,6 +15,9 @@ import com.will.test1.TestApplication;
 public class ImpPresenter implements IPresenter {
 
     private static final String TAG = ImpPresenter.class.getSimpleName();
+
+    private static final int MSG_TEST = 1000;
+
     IView iView;
 
 
@@ -20,13 +26,19 @@ public class ImpPresenter implements IPresenter {
     private Sensor aSensor;
     private Sensor mSensor;
 
-    float[] accelerometerValues = new float[3];
-    float[] magneticFieldValues = new float[3];
+    float[] accelerometerValues;
+    float[] magneticFieldValues;
+    HandlerThread mBackThread = new HandlerThread("BackThread");
+    Handler mBackHandler;
+
+
 
 
 
     public ImpPresenter(IView iView){
         this.iView = iView;
+        mBackThread.start();
+        mBackHandler = new Handler(mBackThread.getLooper(),mCallback);
     }
 
 
@@ -52,9 +64,22 @@ public class ImpPresenter implements IPresenter {
                 magneticFieldValues = sensorEvent.values;
             if (sensorEvent.sensor.getType() == Sensor.TYPE_ACCELEROMETER)
                 accelerometerValues = sensorEvent.values;
-            
+
         }
         public void onAccuracyChanged(Sensor sensor, int accuracy) {}
+    };
+
+    Handler.Callback mCallback = new Handler.Callback() {
+        @Override
+        public boolean handleMessage(Message msg) {
+            switch (msg.what){
+                case MSG_TEST:
+
+
+                    break;
+            }
+            return false;
+        }
     };
 
 }
