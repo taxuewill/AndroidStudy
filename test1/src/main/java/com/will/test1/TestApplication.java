@@ -16,6 +16,7 @@ public class TestApplication extends Application {
         super.onCreate();
         Log.i(TAG,"onCreate ...");
         mContext = this;
+        System.loadLibrary("native-lib");
     }
 
 
