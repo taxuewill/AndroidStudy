@@ -48,11 +48,11 @@ public class ImpPresenter implements IPresenter {
         switch (event){
             case IntEnums.START:{
                 Log.i(TAG,"start...");
-                sm = (SensorManager) TestApplication.getContext().getSystemService(Context.SENSOR_SERVICE);
-                accelerometerSensor = sm.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
-                sm.registerListener(myListener,accelerometerSensor,SensorManager.SENSOR_DELAY_NORMAL);
-                magneticSensor = sm.getDefaultSensor(Sensor.TYPE_MAGNETIC_FIELD);
-                sm.registerListener(myListener,magneticSensor,SensorManager.SENSOR_DELAY_NORMAL);
+//                sm = (SensorManager) TestApplication.getContext().getSystemService(Context.SENSOR_SERVICE);
+//                accelerometerSensor = sm.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
+//                sm.registerListener(myListener,accelerometerSensor,SensorManager.SENSOR_DELAY_NORMAL);
+//                magneticSensor = sm.getDefaultSensor(Sensor.TYPE_MAGNETIC_FIELD);
+//                sm.registerListener(myListener,magneticSensor,SensorManager.SENSOR_DELAY_NORMAL);
 
 //                gyroscopeSensor = sm.getDefaultSensor(Sensor.TYPE_GYROSCOPE);
 //                sm.registerListener(gListener,gyroscopeSensor,SensorManager.SENSOR_DELAY_GAME);

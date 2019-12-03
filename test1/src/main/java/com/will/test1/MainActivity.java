@@ -3,6 +3,7 @@ package com.will.test1;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.Button;
+import android.widget.Toast;
 
 import com.will.test1.constant.Color;
 import com.will.test1.control.BackThread;
@@ -24,7 +25,6 @@ public class MainActivity extends AppCompatActivity implements IView {
 
     private static final String TAG = "WillTest";
 
-    BackThread mBackThread;
 
     IPresenter iPresenter;
     @Color int color;
@@ -46,8 +46,6 @@ public class MainActivity extends AppCompatActivity implements IView {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
-        mBackThread = new BackThread("BackThread");
-        mBackThread.start();
         iPresenter = new ImpPresenter(this);
         iPresenter.onEvent(IntEnums.START);
         updateDay(MONDAY);
@@ -73,7 +71,9 @@ public class MainActivity extends AppCompatActivity implements IView {
         NativeContract.dynamicLog();
         HashMap<String,Integer> configs=new HashMap<>();
         configs.put("Key",1);
+        configs.put("fisheye",1280);
         NativeContract.setConfigs(configs);
         Log.i(TAG,"test_end ,cost "+(System.currentTimeMillis()-start));
+        Toast.makeText(this,"cust time "+((System.currentTimeMillis()-start)),Toast.LENGTH_SHORT).show();
     }
 }

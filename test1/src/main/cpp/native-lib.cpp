@@ -14,8 +14,14 @@
 static const char * java_class="com/will/test1/local/NativeContract";
 
 
-static jclass hashMapClass;
 static jmethodID entrySetMID;
+static jmethodID iteratorMID;
+static jmethodID  hasNextMID;
+static jmethodID nextMID;
+static jmethodID getKeyMID;
+static jmethodID getValueMID;
+static jmethodID valueMID;
+
 
 static void nativeDynamicLog(JNIEnv *env, jclass cla){
     LOGD("hell main");
@@ -23,27 +29,8 @@ static void nativeDynamicLog(JNIEnv *env, jclass cla){
 
 static void nativeSetConfigs(JNIEnv *env, jclass  cla,jobject hashMapInfo){
     LOGD("nativeSetConfigs");
-    jclass hashmapClass = env->GetObjectClass(hashMapInfo);
-    // 获取HashMap类entrySet()方法ID
-    jmethodID entrySetMID = env->GetMethodID(hashmapClass, "entrySet", "()Ljava/util/Set;");
-
     jobject setObj = env->CallObjectMethod(hashMapInfo,entrySetMID);
-    jclass setClass = env->FindClass("java/util/Set");
-    jmethodID  iteratorMID = env->GetMethodID(setClass,"iterator","()Ljava/util/Iterator;");
     jobject iteratorObj = env->CallObjectMethod(setObj,iteratorMID);
-
-    jclass iteratorClass = env->FindClass("java/util/Iterator");
-    jmethodID hasNextMID = env->GetMethodID(iteratorClass, "hasNext", "()Z");
-    // 获取Iterator类中next()方法ID
-    // 用于读取HashMap中的每一条数据
-    jmethodID nextMID = env->GetMethodID(iteratorClass, "next", "()Ljava/lang/Object;");
-
-    jclass entryClass = env->FindClass("java/util/Map$Entry");
-    jmethodID getKeyMID = env->GetMethodID(entryClass, "getKey", "()Ljava/lang/Object;");
-    jmethodID getValueMID = env->GetMethodID(entryClass, "getValue", "()Ljava/lang/Object;");
-
-    jclass integerClass = env->FindClass("java/lang/Integer");
-    jmethodID valueMID = env->GetMethodID(integerClass, "intValue", "()I");
 
     // 循环检测HashMap中是否还有数据
     while (env->CallBooleanMethod(iteratorObj, hasNextMID)) {
@@ -75,16 +62,40 @@ static void nativeSetConfigs(JNIEnv *env, jclass  cla,jobject hashMapInfo){
     }
 
     // 释放JNI局部引用: jclass jobject
-    env->DeleteLocalRef(hashmapClass);
     env->DeleteLocalRef(setObj);
-    env->DeleteLocalRef(setClass);
     env->DeleteLocalRef(iteratorObj);
+
+}
+
+
+void initNative(JNIEnv * env){
+    jclass hashmapClass = env->FindClass("java/util/HashMap");
+    // 获取HashMap类entrySet()方法ID
+    entrySetMID = env->GetMethodID(hashmapClass, "entrySet", "()Ljava/util/Set;");
+
+    jclass setClass = env->FindClass("java/util/Set");
+    iteratorMID = env->GetMethodID(setClass,"iterator","()Ljava/util/Iterator;");
+
+    jclass iteratorClass = env->FindClass("java/util/Iterator");
+    hasNextMID = env->GetMethodID(iteratorClass, "hasNext", "()Z");
+    // 获取Iterator类中next()方法ID
+    // 用于读取HashMap中的每一条数据
+    nextMID = env->GetMethodID(iteratorClass, "next", "()Ljava/lang/Object;");
+
+    jclass entryClass = env->FindClass("java/util/Map$Entry");
+    getKeyMID = env->GetMethodID(entryClass, "getKey", "()Ljava/lang/Object;");
+    getValueMID = env->GetMethodID(entryClass, "getValue", "()Ljava/lang/Object;");
+
+    jclass integerClass = env->FindClass("java/lang/Integer");
+    valueMID = env->GetMethodID(integerClass, "intValue", "()I");
+
+    env->DeleteLocalRef(hashmapClass);
+    env->DeleteLocalRef(setClass);
     env->DeleteLocalRef(iteratorClass);
     env->DeleteLocalRef(entryClass);
     env->DeleteLocalRef(integerClass);
 
 }
-
 
 
 JNINativeMethod nativeMethod[] = {
@@ -102,8 +113,6 @@ JNIEXPORT jint JNICALL JNI_OnLoad(JavaVM *jvm, void *reserved) {
     LOGD("JNI_OnLoad comming");
     jclass clz = env->FindClass(java_class);
     env->RegisterNatives(clz, nativeMethod, sizeof(nativeMethod)/sizeof(nativeMethod[0]));
-    jclass hashMapClz = env->FindClass("java/util/HashMap");
-    hashMapClass = (jclass)env->NewGlobalRef(hashMapClz);
-    env->DeleteLocalRef(hashMapClz);
+    initNative(env);
     return JNI_VERSION_1_4;
 }
