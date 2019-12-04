@@ -11,6 +11,9 @@ import android.os.Message;
 import android.util.Log;
 
 import com.will.test1.TestApplication;
+import com.will.test1.function.impl.DormancyFunction;
+import com.will.test1.function.intf.IFunction;
+import com.will.test1.function.param.InParam;
 
 public class ImpPresenter implements IPresenter {
 
@@ -31,7 +34,7 @@ public class ImpPresenter implements IPresenter {
     float[] magneticFieldValues;
     HandlerThread mBackThread = new HandlerThread("BackThread");
     Handler mBackHandler;
-
+    IFunction mDormancyFunction = new DormancyFunction();
 
 
 
@@ -61,6 +64,10 @@ public class ImpPresenter implements IPresenter {
         }
     }
 
+    @Override
+    public void sendCmd(int cmd) {
+        mDormancyFunction.runWithParam(new InParam(cmd));
+    }
 
 
     SensorEventListener myListener = new SensorEventListener() {

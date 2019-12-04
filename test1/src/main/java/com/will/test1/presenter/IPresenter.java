@@ -4,4 +4,6 @@ public interface IPresenter {
 
 
     void onEvent(@IntEnums.UiEvnets int event);
+
+    void sendCmd(int cmd);
 }

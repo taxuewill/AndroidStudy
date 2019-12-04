@@ -2,6 +2,7 @@ package com.will.test1;
 
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
@@ -12,6 +13,9 @@ import com.will.test1.presenter.IPresenter;
 import com.will.test1.presenter.IView;
 import com.will.test1.presenter.ImpPresenter;
 import com.will.test1.presenter.IntEnums;
+import com.will.test1.test.TestConfig;
+import com.will.test1.util.ExecutableTask;
+import com.will.test1.util.TaskTimerUtil;
 
 import java.util.HashMap;
 
@@ -39,6 +43,10 @@ public class MainActivity extends AppCompatActivity implements IView {
 
     @BindView(R.id.btn_test)
     Button mBtnTest;
+    @BindView(R.id.btn_sleep)
+    Button mBtnSleep;
+    @BindView(R.id.btn_wake)
+    Button mBtnWake;
 
 
     @Override
@@ -75,5 +83,26 @@ public class MainActivity extends AppCompatActivity implements IView {
         NativeContract.setConfigs(configs);
         Log.i(TAG,"test_end ,cost "+(System.currentTimeMillis()-start));
         Toast.makeText(this,"cust time "+((System.currentTimeMillis()-start)),Toast.LENGTH_SHORT).show();
+    }
+
+    @OnClick({R.id.btn_sleep,R.id.btn_wake})
+    public void onClick(View v){
+        switch (v.getId()){
+            case R.id.btn_sleep:
+                Log.i(TAG,"start sleep in 10s");
+                TaskTimerUtil.getInstance().startTimer(new DelaySleep(),DelaySleep.class.getSimpleName(),10*1000);
+                break;
+            case R.id.btn_wake:
+                iPresenter.sendCmd(TestConfig.CMD_WAKE);
+                break;
+        }
+    }
+
+    class DelaySleep extends ExecutableTask{
+        @Override
+        public void execute() {
+            Log.i(TAG,"run sleep...");
+            iPresenter.sendCmd(TestConfig.CMD_SLEEP);
+        }
     }
 }
