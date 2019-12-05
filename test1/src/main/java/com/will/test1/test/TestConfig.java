@@ -4,4 +4,6 @@ public class TestConfig {
 
     public static final int CMD_SLEEP = 100;
     public static final int CMD_WAKE = 101;
+    public static final int CMD_ALARM = 102;
+
 }

@@ -47,6 +47,8 @@ public class MainActivity extends AppCompatActivity implements IView {
     Button mBtnSleep;
     @BindView(R.id.btn_wake)
     Button mBtnWake;
+    @BindView(R.id.btn_alarm)
+    Button mBtnAlarm;
 
 
     @Override
@@ -85,7 +87,7 @@ public class MainActivity extends AppCompatActivity implements IView {
         Toast.makeText(this,"cust time "+((System.currentTimeMillis()-start)),Toast.LENGTH_SHORT).show();
     }
 
-    @OnClick({R.id.btn_sleep,R.id.btn_wake})
+    @OnClick({R.id.btn_sleep,R.id.btn_wake,R.id.btn_alarm})
     public void onClick(View v){
         switch (v.getId()){
             case R.id.btn_sleep:
@@ -94,6 +96,9 @@ public class MainActivity extends AppCompatActivity implements IView {
                 break;
             case R.id.btn_wake:
                 iPresenter.sendCmd(TestConfig.CMD_WAKE);
+                break;
+            case R.id.btn_alarm:
+                iPresenter.sendCmd(TestConfig.CMD_ALARM);
                 break;
         }
     }
