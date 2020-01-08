@@ -14,6 +14,8 @@ import com.will.test1.TestApplication;
 import com.will.test1.function.impl.DormancyFunction;
 import com.will.test1.function.intf.IFunction;
 import com.will.test1.function.param.InParam;
+import com.will.test1.util.ExecutableTask;
+import com.will.test1.util.TaskTimerUtil;
 
 public class ImpPresenter implements IPresenter {
 
@@ -37,12 +39,19 @@ public class ImpPresenter implements IPresenter {
     IFunction mDormancyFunction = new DormancyFunction();
 
 
+    ExecutableTask mTestTask = new ExecutableTask() {
+        @Override
+        public void execute() {
+            Log.i(ImpPresenter.TAG,"test task ...");
+        }
+    };
 
 
     public ImpPresenter(IView iView){
         this.iView = iView;
         mBackThread.start();
         mBackHandler = new Handler(mBackThread.getLooper(),mCallback);
+        TaskTimerUtil.getInstance().startTimer(mTestTask,"TestTask",0,1000);
     }
 
 
@@ -51,14 +60,14 @@ public class ImpPresenter implements IPresenter {
         switch (event){
             case IntEnums.START:{
                 Log.i(TAG,"start...");
-//                sm = (SensorManager) TestApplication.getContext().getSystemService(Context.SENSOR_SERVICE);
-//                accelerometerSensor = sm.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
-//                sm.registerListener(myListener,accelerometerSensor,SensorManager.SENSOR_DELAY_NORMAL);
-//                magneticSensor = sm.getDefaultSensor(Sensor.TYPE_MAGNETIC_FIELD);
-//                sm.registerListener(myListener,magneticSensor,SensorManager.SENSOR_DELAY_NORMAL);
+                sm = (SensorManager) TestApplication.getContext().getSystemService(Context.SENSOR_SERVICE);
+                accelerometerSensor = sm.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
+                sm.registerListener(myListener,accelerometerSensor,SensorManager.SENSOR_DELAY_NORMAL);
+                magneticSensor = sm.getDefaultSensor(Sensor.TYPE_MAGNETIC_FIELD);
+                sm.registerListener(myListener,magneticSensor,SensorManager.SENSOR_DELAY_NORMAL);
 
-//                gyroscopeSensor = sm.getDefaultSensor(Sensor.TYPE_GYROSCOPE);
-//                sm.registerListener(gListener,gyroscopeSensor,SensorManager.SENSOR_DELAY_GAME);
+                gyroscopeSensor = sm.getDefaultSensor(Sensor.TYPE_GYROSCOPE);
+                sm.registerListener(gListener,gyroscopeSensor,SensorManager.SENSOR_DELAY_GAME);
                 break;
             }
         }
@@ -98,7 +107,7 @@ public class ImpPresenter implements IPresenter {
             float gyrox = event.values[0];
             float gyroy = event.values[1];
             float gyroz = event.values[2];
-            Log.i(TAG,String.format("                                                                                x:%f,y:%f,z:%f",gyrox,gyroy,gyroz));
+//            Log.i(TAG,String.format(" x:%f,y:%f,z:%f",gyrox,gyroy,gyroz));
         }
 
         @Override
@@ -141,5 +150,7 @@ public class ImpPresenter implements IPresenter {
         array[2] = y;
 
     }
+
+
 
 }

@@ -30,7 +30,7 @@ public class DormancyFunction implements IFunction {
     Method mGotoSleep;
     private PowerManager.WakeLock mScreenLock;
 
-    private static final long SLEEP_INTERNAL = 20L*1000;
+    private static final long SLEEP_INTERNAL = 30L*1000;
     private static final String ALARM_ACTION = "segway.alarm.Action";
 
     private IScreenListener mListener = new IScreenListener() {
@@ -91,6 +91,7 @@ public class DormancyFunction implements IFunction {
     }
 
     private void handleSleep() {
+        handleAlarm();
         gotoSleep();
     }
 
