@@ -10,7 +10,7 @@ public class ImpPresenter implements IPresenter {
 
 
     @Override
-    public void onEvent(@IntEnums.UiEvnets int event) {
+    public void onEvent(int event) {
 
     }
 }
