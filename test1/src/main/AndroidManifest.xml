@@ -17,6 +17,7 @@
             </intent-filter>
         </activity>
         <service android:name=".backwork.UploadIntentService" />
+        <service android:name=".service.MonitorService" />
     </application>
 
 </manifest>
