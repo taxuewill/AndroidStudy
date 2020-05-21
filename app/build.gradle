@@ -1,4 +1,5 @@
 apply plugin: 'com.android.application'
+apply from : 'config.gradle'
 
 android {
     compileSdkVersion 28
@@ -17,9 +18,19 @@ android {
         }
     }
     buildTypes {
+
+        debug {
+            minifyEnabled false
+            buildConfigField("String", "algo_vision", '"test_string"')
+            buildConfigField("String[]", "algo_vision_array", '{'+project.ext.vision.key1+','
+                +project.ext.vision.key2+'}')
+        }
+
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            buildConfigField("String", "algo_vision", '"test_string"')
+            buildConfigField("String[]", "algo_vision_array", '{"test_string1","test_string2"}')
         }
     }
     externalNativeBuild {
