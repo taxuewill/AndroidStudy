@@ -1,17 +1,17 @@
 package com.will.test1;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.Button;
 
-import com.will.test1.backwork.UploadIntentService;
-import com.will.test1.config.CommonConfig;
+import androidx.appcompat.app.AppCompatActivity;
+
+import com.will.test1.mynative.AllJniInterface;
+import com.will.test1.mynative.iml.JniTestManager;
 import com.will.test1.presenter.IPresenter;
 import com.will.test1.presenter.IView;
 import com.will.test1.presenter.ImpPresenter;
 
-import androidx.appcompat.app.AppCompatActivity;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -19,6 +19,7 @@ import butterknife.OnClick;
 public class MainActivity extends AppCompatActivity implements IView {
 
     private static final String TAG = "WillTest";
+
 
     IPresenter iPresenter;
 
@@ -42,10 +43,10 @@ public class MainActivity extends AppCompatActivity implements IView {
 
     @OnClick(R.id.btn_test)
     void onTest(){
-        Log.i(TAG,"test");
-        Intent intent = new Intent(this, UploadIntentService.class);
-        intent.putExtra(CommonConfig.TEST,count++);
-        startService(intent);
+        Log.i(TAG,"test" + JniTestManager.getInstance().getStrFromJni("abc"));
+//        Intent intent = new Intent(this, MyIntentService.class);
+//        intent.putExtra("taskName","task1");
+//        startService(intent);
     }
 
 

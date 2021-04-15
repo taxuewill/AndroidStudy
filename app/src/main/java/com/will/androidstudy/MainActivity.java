@@ -6,14 +6,22 @@ import android.os.Bundle;
 import android.util.Log;
 import android.widget.TextView;
 
+import com.google.gson.Gson;
+import com.will.androidstudy.beans.Student;
+
 public class MainActivity extends AppCompatActivity {
 
     private static final String TAG = "AndroidStudy";
+    private static final String KEY_AGE = "KEY_AGE";
+
+    private Gson mGson = new Gson();
 
     // Used to load the 'native-lib' library on application startup.
     static {
         System.loadLibrary("native-lib");
     }
+
+    private int age;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,10 +30,14 @@ public class MainActivity extends AppCompatActivity {
 
         // Example of a call to a native method
         TextView tv = findViewById(R.id.sample_text);
-        tv.setText(BuildConfig.algo_vision);
-        for(String temp : BuildConfig.algo_vision_array) {
-            Log.i(TAG, "onCreate " + temp);
-        }
+
+        Student student = new Student();
+        student.setAge(10);
+        student.setName("Wang");
+        Student json = mGson.fromJson(mGson.toJson(student),Student.class);
+        tv.setText(json.getName()+","+json.getAge());
+        age = 10;
+
     }
 
     /**
@@ -33,4 +45,19 @@ public class MainActivity extends AppCompatActivity {
      * which is packaged with this application.
      */
     public native String stringFromJNI();
+
+
+    @Override
+    protected void onSaveInstanceState(Bundle savedInstanceState){
+        Log.i(TAG,"onSaveInstanceState "+savedInstanceState);
+        savedInstanceState.putInt(KEY_AGE,age);
+        super.onSaveInstanceState(savedInstanceState);
+    }
+
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        Log.i(TAG,"onRestoreInstanceState " +savedInstanceState );
+        super.onRestoreInstanceState(savedInstanceState);
+        age = savedInstanceState.getInt(KEY_AGE);
+    }
 }
