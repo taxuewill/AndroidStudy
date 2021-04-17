@@ -22,7 +22,7 @@ public class MainActivity extends AppCompatActivity {
 
         // Example of a call to a native method
         TextView tv = findViewById(R.id.sample_text);
-        tv.setText(BuildConfig.algo_vision);
+        tv.setText(stringFromJNI());
         for(String temp : BuildConfig.algo_vision_array) {
             Log.i(TAG, "onCreate " + temp);
         }
