@@ -12,6 +12,9 @@ import com.will.test1.presenter.IView;
 import com.will.test1.presenter.ImpPresenter;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import javax.security.auth.login.LoginException;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -32,6 +35,7 @@ public class MainActivity extends AppCompatActivity implements IView {
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
         iPresenter = new ImpPresenter(this);
+        Log.i(TAG,"onCreate");
 
     }
 
@@ -47,6 +51,55 @@ public class MainActivity extends AppCompatActivity implements IView {
         intent.putExtra(CommonConfig.TEST,count++);
         startService(intent);
     }
+    
+    @Override
+    protected void onRestart(){
+        super.onRestart();
+        Log.i(TAG, "onRestart: ");
+    }
+    
+    @Override
+    protected void onStart(){
+        super.onStart();
+        Log.i(TAG, "onStart: ");
+    }
+    
+    @Override
+    protected void onResume(){
+        super.onResume();
+        Log.i(TAG, "onResume: ");
+    }
+    
+    @Override
+    protected void onPause(){
+        super.onPause();
+        Log.i(TAG, "onPause: ");
+    }
+    
+    protected void onStop(){
+        super.onStop();
+        Log.i(TAG, "onStop: ");
+    }
+    
+    protected void onDestroy(){
+        super.onDestroy();
+        Log.i(TAG, "onDestroy: ");
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        outState.putString(TAG,"hello");
+        Log.i(TAG, "onSaveInstanceState: ");
+        super.onSaveInstanceState(outState);
+
+    }
+
+    @Override
+    public void onRestoreInstanceState(Bundle savedInstanceState) {
+        Log.i(TAG, "onRestoreInstanceState: "+savedInstanceState.get(TAG));
+    }
 
 
-}
+
+
+    }
