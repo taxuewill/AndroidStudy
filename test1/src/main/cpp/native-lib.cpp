@@ -1,7 +1,9 @@
 #include <jni.h>
 #include <android/log.h>
-
+#include "java_and_jni.h"
 #define TAG  "native_lib"
+
+
 
 //help ref https://blog.csdn.net/shaosunrise/article/details/79838297
 
@@ -22,6 +24,7 @@ static jmethodID getKeyMID;
 static jmethodID getValueMID;
 static jmethodID valueMID;
 
+using namespace will_test;
 
 static void nativeDynamicLog(JNIEnv *env, jclass cla){
     LOGD("hell main");
@@ -97,10 +100,16 @@ void initNative(JNIEnv * env){
 
 }
 
+void nativeTestLocalRef(JNIEnv *env,jclass cla){
+    LOGD("nativeTestLocalRef");
+    JniBridge::self()->testLocalRef();
+}
+
 
 JNINativeMethod nativeMethod[] = {
         {"dynamicLog", "()V", (void*)nativeDynamicLog},
-        {"setConfigs", "(Ljava/util/HashMap;)V", (void*)nativeSetConfigs}
+        {"setConfigs", "(Ljava/util/HashMap;)V", (void*)nativeSetConfigs},
+        {"testLocalRef","()V",(void*)nativeTestLocalRef}
         };
 
 JNIEXPORT jint JNICALL JNI_OnLoad(JavaVM *jvm, void *reserved) {

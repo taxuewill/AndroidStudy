@@ -12,6 +12,11 @@ namespace will_test{
     class JniBridge{
     public:
         static JniBridge * self();
+        JniBridge();
+
+        void testLocalRef();
+        void testGlobalRef();
+        void testWeakGlobalRef();
 
     };
 
