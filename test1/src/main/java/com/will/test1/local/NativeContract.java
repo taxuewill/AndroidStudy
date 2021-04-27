@@ -13,4 +13,6 @@ public class NativeContract {
     public static native void testGlobalRef();
 
     public static native void testWeakGlobalRef();
+
+    public static native void testStringArray(String [] String);
 }

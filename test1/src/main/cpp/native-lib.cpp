@@ -105,11 +105,17 @@ void nativeTestLocalRef(JNIEnv *env,jclass cla){
     JniBridge::self()->testLocalRef();
 }
 
+void nativeTestStringArray(JNIEnv *evn,jclass cla,jobjectArray stringArray){
+    LOGD("nativeTestStringArray");
+
+}
+
 
 JNINativeMethod nativeMethod[] = {
         {"dynamicLog", "()V", (void*)nativeDynamicLog},
         {"setConfigs", "(Ljava/util/HashMap;)V", (void*)nativeSetConfigs},
-        {"testLocalRef","()V",(void*)nativeTestLocalRef}
+        {"testLocalRef","()V",(void*)nativeTestLocalRef},
+        {"testStringArray","([Ljava/lang/String;)V",(void*)nativeTestStringArray}
         };
 
 JNIEXPORT jint JNICALL JNI_OnLoad(JavaVM *jvm, void *reserved) {

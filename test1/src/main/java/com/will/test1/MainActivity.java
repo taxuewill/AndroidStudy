@@ -29,7 +29,8 @@ public class MainActivity extends AppCompatActivity implements IView {
         mBtnTest.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                NativeContract.testLocalRef();
+//                NativeContract.testLocalRef();
+                String [] strArray={"abc","123"};
             }
         });
 
