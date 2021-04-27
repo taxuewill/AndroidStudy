@@ -105,9 +105,27 @@ void nativeTestLocalRef(JNIEnv *env,jclass cla){
     JniBridge::self()->testLocalRef();
 }
 
-void nativeTestStringArray(JNIEnv *evn,jclass cla,jobjectArray stringArray){
+void nativeTestStringArray(JNIEnv *env, jclass cla, jobjectArray stringArray) {
     LOGD("nativeTestStringArray");
+    int count = env->GetArrayLength(stringArray);
+    LOGD("nativeTestStringArray length is %d", count);
+    if (env->EnsureLocalCapacity(300) < 0) {
+        LOGD("no enough memory");
+        return;
+    }
+    LOGD("have enough memory 300");
+    if (env->PushLocalFrame(count) < 0) {
+        LOGD("no count memory");
+        return;
+    }
+    for (int i = 0; i < count; i++) {
+        jstring str = (jstring) env->GetObjectArrayElement(stringArray, i);
+        const char * rawString = env->GetStringUTFChars(str,0);
+        LOGD("str[%d] is %s",i,rawString);
+        env->ReleaseStringUTFChars(str,rawString);
+    }
 
+    env->PopLocalFrame(NULL);
 }
 
 

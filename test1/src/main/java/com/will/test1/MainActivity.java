@@ -31,6 +31,7 @@ public class MainActivity extends AppCompatActivity implements IView {
             public void onClick(View v) {
 //                NativeContract.testLocalRef();
                 String [] strArray={"abc","123"};
+                NativeContract.testStringArray(strArray);
             }
         });
 
