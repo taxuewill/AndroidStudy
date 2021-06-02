@@ -25,10 +25,15 @@ android {
     externalNativeBuild {
         cmake {
             path "src/main/cpp/CMakeLists.txt"
-            version "3.10.2"
         }
     }
 }
+
+task test_log(){
+    println "this is test_log *********************"
+}
+
+preBuild.dependsOn test_log
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
