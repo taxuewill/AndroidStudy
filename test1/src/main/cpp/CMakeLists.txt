@@ -20,7 +20,9 @@ add_library( # Sets the name of the library.
         native-lib.cpp
         Static.cpp
         java_and_jni.cpp
-        ref_java/Java_NativeContract_Jni.cpp)
+        jni_help/jni_utils.cpp
+        ref_java/Java_NativeContract_Jni.cpp
+        ref_java/Native_Exception_Test.cpp)
 
 # Searches for a specified prebuilt library and stores the path as a
 # variable. Because CMake includes system libraries in the search path by

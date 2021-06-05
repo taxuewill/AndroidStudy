@@ -1,2 +1,3 @@
+include ':common'
 include ':app', ':test1'
 rootProject.name='AndroidStudy'

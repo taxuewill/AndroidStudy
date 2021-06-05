@@ -2,6 +2,7 @@
 #include "java_and_jni.h"
 #include "android_log.h"
 #include "ref_java/Java_NativeContract_Jni.h"
+#include "ref_java/Native_Exception_Test.h"
 #define TAG  "native_lib"
 
 
@@ -19,6 +20,7 @@ JNIEXPORT jint JNICALL JNI_OnLoad(JavaVM *jvm, void *reserved) {
     LOGD("JNI_OnLoad");
     gJavaVM = jvm;
     registerNativeContract(env);
+    registerNativeExceptionTest(env);
     return JNI_VERSION_1_4;
 }
 

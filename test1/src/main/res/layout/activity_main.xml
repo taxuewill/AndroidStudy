@@ -10,13 +10,15 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Hello World!"
-         />
+        android:text="Hello" />
     <Button
         android:id="@+id/btn_test"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAllCaps="false"
         android:text="test"/>
-
+    <include android:id="@+id/layout_import"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        layout="@layout/merge_text" />
 </LinearLayout>
