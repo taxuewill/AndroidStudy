@@ -8,6 +8,7 @@ import android.widget.TextView;
 
 import com.google.gson.Gson;
 import com.will.androidstudy.beans.Student;
+import com.will.androidstudy.manager.PluginManager;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -59,5 +60,11 @@ public class MainActivity extends AppCompatActivity {
         Log.i(TAG,"onRestoreInstanceState " +savedInstanceState );
         super.onRestoreInstanceState(savedInstanceState);
         age = savedInstanceState.getInt(KEY_AGE);
+    }
+
+    @Override
+    public void onResume(){
+        super.onResume();
+        PluginManager.getInstance().test();
     }
 }

@@ -41,6 +41,14 @@ android {
     }
 }
 
+project.afterEvaluate {
+    project.tasks.each {
+        if (it.name == 'mergeDebugAssets') {
+            it.dependsOn ':test1:assembleDebug'
+        }
+    }
+}
+
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation 'com.google.code.gson:gson:2.8.6'

@@ -22,6 +22,11 @@ android {
     }
 
     buildTypes {
+
+        debug{
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
@@ -39,6 +44,21 @@ android {
         }
     }
 
+}
+
+project.afterEvaluate {
+    project.tasks.each {
+//        println "afterEvaluate "+it.name
+        if(it.name == "assembleDebug"){
+            it.doLast {
+                copy {
+                    from new File(project.getBuildDir(), 'outputs/apk/debug/test1-debug.apk').absolutePath
+                    into new File(project.getRootProject().getProjectDir(), 'app/src/main/assets')
+                    rename 'patch-debug.apk', 'patch.apk'
+                }
+            }
+        }
+    }
 }
 
 dependencies {
