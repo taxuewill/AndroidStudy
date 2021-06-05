@@ -1,3 +1,4 @@
 include ':common'
 include ':app', ':test1'
 rootProject.name='AndroidStudy'
+println "初始化阶段开始..."

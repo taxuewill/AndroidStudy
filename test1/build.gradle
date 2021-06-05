@@ -50,6 +50,15 @@ android {
 
 }
 
+this.afterEvaluate {
+    println "配置阶段完成之后的监听回调"
+}
+
+this.gradle.buildFinished {
+    println "gradle执行完毕后的监听回调"
+}
+
+
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
